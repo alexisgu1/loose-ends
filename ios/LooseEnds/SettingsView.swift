@@ -27,6 +27,12 @@ struct SettingsView: View {
                         } label: { Label("Remind me of today's plans", systemImage: "bell") }
                         Button {
                             dismiss()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                                deck.bursts.append(ConfettiBurst(emojis: Near.emojis(for: deck.current?.place ?? "Kang's")))
+                            }
+                        } label: { Label("Test confetti", systemImage: "sparkles") }
+                        Button {
+                            dismiss()
                             Task { await deck.load(store: store) }
                         } label: { Label("Start this week over", systemImage: "arrow.counterclockwise") }
                     } header: {

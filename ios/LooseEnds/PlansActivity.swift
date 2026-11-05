@@ -12,7 +12,18 @@ enum PlansActivity {
     }
 
     /// Today's plans, as a reminder on the lock screen and in the Dynamic Island. Goes stale at midnight.
-    static func remind(_ plans: [PlansAttributes.Reminder]) {
+    /// Plans you just made show up for 20 seconds as a confirmation, then the reminder goes away.
+    private static var hideTask: Task<Void, Never>?
+
+    static func remind(_ plans: [PlansAttributes.Reminder], hideAfter seconds: Double? = 20) {
+        hideTask?.cancel()
+        if let seconds {
+            hideTask = Task {
+                try? await Task.sleep(for: .seconds(seconds + 0.5))
+                guard !Task.isCancelled else { return }
+                for a in Activity<PlansAttributes>.activities where !a.content.state.today.isEmpty { await a.end(nil, dismissalPolicy: .immediate) }
+            }
+        }
         guard ActivityAuthorizationInfo().areActivitiesEnabled, !plans.isEmpty else { return }
         let sorted = plans.sorted { $0.start < $1.start }
         let state = PlansAttributes.ContentState(names: sorted.map(\.name), today: sorted)
@@ -36,7 +47,7 @@ enum PlansActivity {
         if first < now { first = max(now.addingTimeInterval(3600), first) }   // keep both in the future
         if second <= first { second = first.addingTimeInterval(4 * 3600) }
         remind([.init(name: "Ruby", place: "Kang's", start: first),
-                .init(name: "Omar", place: "Sava's", start: second)])
+                .init(name: "Omar", place: "Sava's", start: second)], hideAfter: nil)
     }
 
     static func endAll() {

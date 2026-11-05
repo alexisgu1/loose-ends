@@ -41,6 +41,10 @@ extension PlansAttributes.Reminder {
         return start.formatted(.dateTime.weekday(.abbreviated)) + " at \(clock)"
     }
     var end: Date { start.addingTimeInterval(3600) }
+    /// "7:00" today, "Sat 7:00" another day — fits the island
+    var shortWhen: String {
+        Calendar.current.isDateInToday(start) ? clock : start.formatted(.dateTime.weekday(.abbreviated)) + " " + clock
+    }
     /// "1:30"
     var clock: String { let c = Calendar.current.dateComponents([.hour, .minute], from: start); let h = (c.hour ?? 0) % 12; return "\(h == 0 ? 12 : h):" + String(format: "%02d", c.minute ?? 0) }
     /// "7:00 pm"

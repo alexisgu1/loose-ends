@@ -58,11 +58,16 @@ struct PlansLiveActivity: Widget {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
             } compactLeading: {
-                ActivityFaces(names: ctx.state.names, size: 22, ring: .black)
-            } compactTrailing: {
-                // reminder: when the next plan starts; nudge: how many to make
+                // reminder: just the next person; nudge: everyone you picked
                 if let next = ctx.state.today.first {
-                    Text(next.time).font(.system(size: 15, weight: .medium))
+                    ActivityFaces(names: [next.name], size: 22)
+                } else {
+                    ActivityFaces(names: ctx.state.names, size: 22, ring: .black)
+                }
+            } compactTrailing: {
+                // reminder: when that plan is ("Sat 7:00"); nudge: how many to make
+                if let next = ctx.state.today.first {
+                    Text(next.shortWhen).font(.system(size: 15, weight: .medium))
                 } else {
                     Text("\(ctx.state.names.count) plans").font(.system(size: 15, weight: .medium))
                 }
