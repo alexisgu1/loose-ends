@@ -86,7 +86,7 @@ enum Near {
     /// A place that isn't on the list: the words after "get / at / to / try / grab", up to the day or the
     /// end of the sentence. "Let's get Chipotle this Friday!" → "Chipotle", "lock in at the UGLi tonight" → "the UGLi".
     static func guess(in text: String) -> String? {
-        let pattern = #"(?i)\b(?:get|at|to|try|grab|hit|visit)\s+(.+?)(?=\s+(?:this|tonight|tomorrow|today|on|next|at|for|sometime|soon)\b|[!?.,]|$)"#
+        let pattern = #"(?i)\b(?:get|at|to|try|grab|hit|visit|walk|browse|on|see|explore)\s+(.+?)(?=\s+(?:this|tonight|tomorrow|today|on|next|at|for|sometime|soon)\b|[!?.,]|$)"#
         guard let re = try? NSRegularExpression(pattern: pattern) else { return nil }
         let skip: Set<String> = ["dinner", "lunch", "food", "coffee", "drinks", "boba", "brunch", "breakfast", "together", "a bite", "it", "you", "me", "us"]
         // "get dinner at Sava's": skip "dinner", take the next one

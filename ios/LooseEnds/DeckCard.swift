@@ -35,6 +35,7 @@ struct DeckCard: View {
     @State private var locked = false
     @FocusState private var editing: Bool
     @State private var editingText = false
+    @State private var placeSpan: Range<Int>?   // where the place sits in the message, while you edit
 
     private var isTop: Bool { depth == 0 }
 
@@ -67,11 +68,17 @@ struct DeckCard: View {
             }
             .animation(.smooth(duration: 0.5), value: plan.text)
             .padding(.top, 20)
-                .onChange(of: plan.text) { _, t in
-                    // edit the place in the text and the plan follows
-                    // known spots first ("kang's", "the dude"), otherwise whatever place you wrote
-                    let place = Near.find(in: t)?.name ?? Near.guess(in: t)
-                    if let place, place != plan.place { plan.place = place }
+            .zIndex(1)   // the text, its selection handles and the edit menu stay above the calendar
+                .onChange(of: plan.text) { old, new in
+                    // The plan follows whatever you write where the place was, even if it isn't a real place:
+                    // "Let's walk the Arb tonight!" → "Let's walk the hello tonight!" makes the plan "the hello".
+                    let t = DeckCard.trackPlace(old: old, new: new, place: plan.place, span: placeSpan)
+                    placeSpan = t.span
+                    if let place = t.place {
+                        if place != plan.place { plan.place = place }
+                    } else if t.span == nil, let place = Near.find(in: new)?.name ?? Near.guess(in: new), place != plan.place {
+                        plan.place = place   // couldn't find the place in the text: read the sentence instead
+                    }
                 }
             DayCalendar(plan: $plan, active: isTop, locked: $locked)
                 .padding(.top, 40)
@@ -98,6 +105,35 @@ struct DeckCard: View {
                 if dx > 100 { fly(1) } else if dx < -100 { fly(-1) }
                 else { withAnimation(.spring(response: 0.35, dampingFraction: 0.6)) { dx = 0 } }
             }
+    }
+
+    /// Follows the place through edits by position. `span` is where the place sits (in characters); an edit that
+    /// touches it becomes the new place, word for word, even if it isn't a real place. Returns the new place
+    /// (nil to leave the plan alone) and the updated span.
+    static func trackPlace(old: String, new: String, place: String, span: Range<Int>?) -> (place: String?, span: Range<Int>?) {
+        let o = Array(old), n = Array(new)
+        var s = span
+        if let k = s, k.upperBound <= o.count,
+       { let w = String(o[k]).trimmingCharacters(in: .whitespaces); return w.isEmpty || w.caseInsensitiveCompare(place) == .orderedSame }() {
+        // still where we left it (or emptied out while you retype)
+    } else {
+            s = nil
+            if let r = old.range(of: place, options: .caseInsensitive) {
+                let lo = old.distance(from: old.startIndex, to: r.lowerBound)
+                s = lo..<(lo + old.distance(from: r.lowerBound, to: r.upperBound))
+            }
+        }
+        guard let sp = s else { return (nil, nil) }
+        var cp = 0; while cp < min(o.count, n.count), o[cp] == n[cp] { cp += 1 }
+        var cs = 0; while cs < min(o.count, n.count) - cp, o[o.count - 1 - cs] == n[n.count - 1 - cs] { cs += 1 }
+        let delta = n.count - o.count, editEnd = o.count - cs
+        if editEnd < sp.lowerBound { return (nil, (sp.lowerBound + delta)..<(sp.upperBound + delta)) }   // edit before it
+        if cp > sp.upperBound { return (nil, sp) }                                                         // edit after it
+        if cp < sp.lowerBound || editEnd > sp.upperBound { return (nil, nil) }   // a bigger rewrite: read the sentence instead
+        let lo = min(sp.lowerBound, cp), hi = max(min(n.count, sp.upperBound + delta), n.count - cs)
+        guard lo <= hi else { return (nil, nil) }
+        let typed = String(n[lo..<hi]).trimmingCharacters(in: .whitespaces)
+        return (typed.isEmpty ? nil : typed, lo..<hi)
     }
 
     private func fly(_ dir: CGFloat) {
