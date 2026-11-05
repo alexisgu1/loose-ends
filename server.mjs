@@ -146,8 +146,8 @@ const server = createServer(async (req, res) => {
         draft: `wanna get dinner ${day} at ${time}?? i put it on my cal`, title: `Dinner with ${first}` });
     }
     if (url.pathname === "/api/plan" && req.method === "POST") {
-      const { title, start, end, email } = await readBody(req);
-      const ev = await google.createPlan({ title, start, end, friendEmail: email });
+      const { title, start, end, email, location } = await readBody(req);
+      const ev = await google.createPlan({ title, start, end, friendEmail: email, location });
       return json(res, 200, { ok: true, link: ev.htmlLink, invited: google.status().invites && !!email });
     }
 

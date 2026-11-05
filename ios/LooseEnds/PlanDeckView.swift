@@ -127,6 +127,11 @@ struct FacesRail: View {
 struct EndScreen: View {
     @ObservedObject var deck: DeckModel
     let calendar: () -> Void
+    @Environment(\.openURL) private var openURL
+    /// The event itself if we have its link; otherwise Google Calendar.
+    private func open(_ url: URL?) {
+        if let url { openURL(url) } else { calendar() }
+    }
     var body: some View {
         let ppl = deck.all.filter { deck.sent.contains($0.id) }.sorted { $0.start < $1.start }
         VStack(alignment: .leading, spacing: 0) {
@@ -138,6 +143,8 @@ struct EndScreen: View {
             ScrollView {
                 VStack(spacing: 12) {
                     ForEach(Array(ppl.enumerated()), id: \.element.id) { k, p in
+                        // tap a card to open its event in Google Calendar
+                        Button { open(deck.eventLinks[p.id]) } label: {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(spacing: 12) {
                                 Face(name: p.name)
@@ -151,6 +158,9 @@ struct EndScreen: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(.black)
                         .background(.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                        .contentShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                        }
+                        .buttonStyle(PressScale())
                         .modifier(RiseIn(delay: 0.35 + Double(k) * 0.09))   // then the cards move up into place, one after another
                     }
                 }
@@ -302,5 +312,14 @@ struct RiseIn: ViewModifier {
             .opacity(shown ? 1 : 0)
             .offset(y: shown ? 0 : distance)
             .onAppear { withAnimation(.smooth(duration: 0.5).delay(delay)) { shown = true } }
+    }
+}
+
+/// Cards shrink a touch while pressed.
+struct PressScale: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .animation(.smooth(duration: 0.2), value: configuration.isPressed)
     }
 }

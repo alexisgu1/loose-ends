@@ -7,6 +7,7 @@ struct NearPlace: Equatable {
     let emoji: String
     var verb = "get"              // "Let's get Kang's", "Let's study at Hatcher Library"
     var aliases: [String] = []    // other ways people type it ("the dude", "duderstadt")
+    var address = ""              // goes in the calendar event's location
     var phrase: String { "\(verb) \(name)" }
 }
 
@@ -29,6 +30,30 @@ enum Near {
         .init(name: "M-36 Coffee", emoji: "☕️", verb: "grab coffee at", aliases: ["m36", "m-36"]),
     ]
     static func named(_ n: String) -> NearPlace? { all.first { $0.name == n } }
+
+    /// Street addresses for the calendar event's location (Ann Arbor, MI 48104 area).
+    static let addresses: [String: String] = [
+        "Sava's": "216 S State St",
+        "Mister Spots": "808 S State St",
+        "sweetgreen": "311 S State St",
+        "Kang's": "1327 S University Ave",
+        "No Thai": "1300 S University Ave",
+        "South U Pizza": "1106 S University Ave",
+        "BTB Burrito": "1140 S University Ave",
+        "Good Time Charley's": "1140 S University Ave",
+        "Raising Cane's": "1116 S University Ave",
+        "Hatcher Library": "913 S University Ave",
+        "the Dude": "2281 Bonisteel Blvd",
+        "the Arb": "1610 Washington Heights",
+        "the Diag": "The Diag, University of Michigan",
+        "Michigan Theater": "603 E Liberty St",
+        "M-36 Coffee": "1101 S University Ave",
+    ]
+    /// "Kang's, 1327 S University Ave, Ann Arbor, MI"
+    static func location(for place: String) -> String {
+        guard let a = addresses[place] else { return place + ", Ann Arbor, MI" }
+        return a.contains("University of Michigan") ? a + ", Ann Arbor, MI" : "\(place), \(a), Ann Arbor, MI"
+    }
     /// More emojis per place for the confetti.
     static let confetti: [String: String] = [
         "Sava's": "🍝🍷🥗", "Mister Spots": "🥪🍗🍟", "sweetgreen": "🥗🥑", "Kang's": "🍲🥢🍚", "No Thai": "🍜🥢🌶️",
@@ -153,6 +178,7 @@ final class DeckModel: ObservableObject {
     @Published var picked: [String] = []           // personIds, in tap order
     @Published var bursts: [ConfettiBurst] = []
     @Published var leaving = false
+    @Published var eventLinks: [String: URL] = [:]   // plan id → its Google Calendar event
     /// On the last card the faces row is frozen as it was, so it fades out with everything else.
     @Published var frozenRail: (sent: [String], skipped: [String], current: String?)? = nil
 
@@ -226,7 +252,10 @@ final class DeckModel: ObservableObject {
         if last { frozenRail = (sent, skipped, p.id) }
         if send {
             bursts.append(ConfettiBurst(emojis: Near.emojis(for: p.place)))
-            Task { await store.addPlanToCalendar(p); store.sendPlanText(p) }
+            Task {
+                if let link = await store.addPlanToCalendar(p) { eventLinks[p.id] = link }
+                store.sendPlanText(p)
+            }
             // the plans you've made show up as the lock-screen / Dynamic Island reminder
             let made = (all.filter { sent.contains($0.id) } + [p]).map { PlansAttributes.Reminder(name: $0.name, place: $0.place, start: $0.start) }
             PlansActivity.remind(made)
