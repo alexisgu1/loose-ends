@@ -127,6 +127,7 @@ struct FacesRail: View {
 
 struct EndScreen: View {
     @ObservedObject var deck: DeckModel
+    @EnvironmentObject var store: Store
     let calendar: () -> Void
     @State private var showing: EventPage?
     /// Shows the event's own page (title, time, location) right here; Google Calendar only if we have no link.
@@ -145,7 +146,8 @@ struct EndScreen: View {
                 VStack(spacing: 12) {
                     ForEach(Array(ppl.enumerated()), id: \.element.id) { k, p in
                         // tap a card to open its event in Google Calendar
-                        Button { open(deck.eventLinks[p.id]) } label: {
+                        // tap: open its event · swipe left: trash
+                        SwipeToDelete(onTap: { open(deck.eventLinks[p.id]) }, onDelete: { deck.deleteMade(p, store: store) }) {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(spacing: 12) {
                                 Face(name: p.name)
@@ -161,7 +163,7 @@ struct EndScreen: View {
                         .background(.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
                         .contentShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                         }
-                        .buttonStyle(PressScale())
+                        .transition(.asymmetric(insertion: .identity, removal: .move(edge: .leading).combined(with: .opacity)))
                         .modifier(RiseIn(delay: 0.35 + Double(k) * 0.09))   // then the cards move up into place, one after another
                     }
                 }
@@ -343,4 +345,54 @@ struct SafariView: UIViewControllerRepresentable {
         return vc
     }
     func updateUIViewController(_ vc: SFSafariViewController, context: Context) {}
+}
+
+/// Swipe a card left to reveal a round red trash button; tap it to delete. Tap the card to open it
+/// (or, while the trash is showing, to close it again).
+struct SwipeToDelete<Content: View>: View {
+    let onTap: () -> Void
+    let onDelete: () -> Void
+    @ViewBuilder let content: Content
+    @State private var dx: CGFloat = 0
+    @State private var open = false
+    @State private var pressed = false
+    private let reveal: CGFloat = 76
+
+    var body: some View {
+        ZStack(alignment: .trailing) {
+            Button {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                withAnimation(.smooth(duration: 0.3)) { dx = 0; open = false }
+                onDelete()
+            } label: {
+                Image(systemName: "trash").font(.system(size: 20, weight: .medium)).foregroundStyle(.white)
+                    .frame(width: 56, height: 56)
+                    .background(Color(red: 1, green: 0.231, blue: 0.188), in: Circle())
+            }
+            .buttonStyle(.plain)
+            .opacity(Double(min(1, -dx / reveal)))
+            .scaleEffect(0.6 + 0.4 * min(1, -dx / reveal))
+            .padding(.trailing, 6)
+
+            content
+                .scaleEffect(pressed ? 0.97 : 1)
+                .offset(x: dx)
+                .onTapGesture {
+                    if open { withAnimation(.smooth(duration: 0.3)) { dx = 0; open = false } } else { onTap() }
+                }
+                .onLongPressGesture(minimumDuration: 0.5, pressing: { p in withAnimation(.smooth(duration: 0.2)) { pressed = p } }, perform: {})
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 16)
+                        .onChanged { g in
+                            guard abs(g.translation.width) > abs(g.translation.height) else { return }
+                            let raw = (open ? -reveal : 0) + g.translation.width
+                            dx = raw > 0 ? 0 : raw < -reveal ? -reveal + (raw + reveal) / 3 : raw   // a little give past the button
+                        }
+                        .onEnded { g in
+                            let target = dx < -reveal / 2 ? -reveal : 0
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) { dx = target; open = target != 0 }
+                        }
+                )
+        }
+    }
 }

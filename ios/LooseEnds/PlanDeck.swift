@@ -179,6 +179,7 @@ final class DeckModel: ObservableObject {
     @Published var bursts: [ConfettiBurst] = []
     @Published var leaving = false
     @Published var eventLinks: [String: URL] = [:]   // plan id → its Google Calendar event
+    var eventIds: [String: String] = [:]             // plan id → event id, for deleting it
     /// On the last card the faces row is frozen as it was, so it fades out with everything else.
     @Published var frozenRail: (sent: [String], skipped: [String], current: String?)? = nil
 
@@ -253,7 +254,7 @@ final class DeckModel: ObservableObject {
         if send {
             bursts.append(ConfettiBurst(emojis: Near.emojis(for: p.place)))
             Task {
-                if let link = await store.addPlanToCalendar(p) { eventLinks[p.id] = link }
+                if let ev = await store.addPlanToCalendar(p) { eventLinks[p.id] = ev.link; eventIds[p.id] = ev.id }
                 store.sendPlanText(p)
             }
             // the plans you've made show up as the lock-screen / Dynamic Island reminder
@@ -271,6 +272,14 @@ final class DeckModel: ObservableObject {
                 withAnimation(.easeInOut(duration: 0.45)) { phase = .end }
             }
         }
+    }
+
+    /// Trash on the end screen: the card goes, and so does the event on your calendar.
+    func deleteMade(_ p: DeckPlan, store: Store) {
+        withAnimation(.smooth(duration: 0.35)) { sent.removeAll { $0 == p.id } }
+        eventLinks[p.id] = nil
+        if let id = eventIds.removeValue(forKey: p.id) { Task { await store.deletePlanEvent(id: id) } }
+        if sent.isEmpty { PlansActivity.endAll() }
     }
 
     func openPicker() {

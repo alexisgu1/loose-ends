@@ -141,14 +141,21 @@ final class Store: ObservableObject {
     /// Plan deck, swipe right: put "<place> with <name>" on YOUR calendar. No invite goes out
     /// (invites are off on the Mac: SEND_INVITES = false).
     @discardableResult
-    func addPlanToCalendar(_ p: DeckPlan) async -> URL? {
+    func addPlanToCalendar(_ p: DeckPlan) async -> (link: URL, id: String)? {
         guard let req = request("/api/plan", method: "POST", body: [
             "title": "\(p.place) with \(p.name)", "start": Fmt.iso.string(from: p.start), "end": Fmt.iso.string(from: p.end), "email": p.email ?? "",
             "location": Near.location(for: p.place),
         ]) else { return nil }
         guard let (data, _) = try? await URLSession.shared.data(for: req),
-              let link = (try? JSONSerialization.jsonObject(with: data) as? [String: Any])?["link"] as? String else { return nil }
-        return URL(string: link)
+              let j = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let link = (j["link"] as? String).flatMap(URL.init(string:)), let id = j["id"] as? String else { return nil }
+        return (link, id)
+    }
+
+    /// Take a plan you made back off your calendar (the Mac only deletes events this app created).
+    func deletePlanEvent(id: String) async {
+        guard let req = request("/api/plan/delete", method: "POST", body: ["id": id]) else { return }
+        _ = try? await URLSession.shared.data(for: req)
     }
 
     /// Plan deck, swipe right: the text. Dry run unless TestMode.sendTexts (then it texts YOUR number only).

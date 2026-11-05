@@ -148,7 +148,14 @@ const server = createServer(async (req, res) => {
     if (url.pathname === "/api/plan" && req.method === "POST") {
       const { title, start, end, email, location } = await readBody(req);
       const ev = await google.createPlan({ title, start, end, friendEmail: email, location });
-      return json(res, 200, { ok: true, link: ev.htmlLink, invited: google.status().invites && !!email });
+      return json(res, 200, { ok: true, link: ev.htmlLink, id: ev.id, invited: google.status().invites && !!email });
+    }
+
+    if (url.pathname === "/api/plan/delete" && req.method === "POST") {
+      const { id } = await readBody(req);
+      if (typeof id !== "string" || !id) return json(res, 400, { error: "missing id" });
+      await google.deletePlan(id);
+      return json(res, 200, { ok: true });
     }
 
     if (url.pathname === "/api/digest") {
