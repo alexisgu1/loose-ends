@@ -905,7 +905,7 @@ function bindSwipe(i) {
 }
 function build() {
   document.getElementById("grid").innerHTML = VARIANTS.map((v, i) => `<figure data-i="${i}"><div class="device">
-    <div class="screen"></div><div class="phone"></div>
+    <div class="phone"></div>
     <div class="chrome"><span class="sb-time">9:41</span><span class="sb-icons">${sbIcons()}</span></div>
     <img class="frame" src="bezel-frame.png" alt=""></div></figure>`).join("");
   VARIANTS.forEach((_, i) => draw(i));
