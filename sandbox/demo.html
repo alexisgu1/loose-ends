@@ -271,31 +271,30 @@
     background: linear-gradient(180deg, #a5a9b4, #7d818c); margin-right: -4px; box-shadow: 0 0 0 1.5px rgba(255,255,255,.94); }
   main#grid { padding: 0; flex: 0 1 auto; display: flex; justify-content: center; }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+  /* clean demo: white page, one phone in the real frame, soft shadow, link underneath */
+  :root { --page: #ffffff; color-scheme: light; }
+  body { background: #fff; color: #111; min-height: 100vh; overflow: hidden; }
+  .stage { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  main#grid { padding: 0; display: block; }
+  figure { width: auto; margin: 0; }
+  .device { position: relative; width: var(--dev-w); height: var(--dev-h);
+    filter: drop-shadow(0 30px 40px rgb(0 0 0 / .16)) drop-shadow(0 8px 12px rgb(0 0 0 / .10)); }
+  .device .frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+  .device .screen { position: absolute; left: var(--scr-x); top: var(--scr-y); width: var(--scr-w); height: var(--scr-h);
+    border-radius: var(--scr-r); overflow: hidden; background: #000; z-index: 1; }
+  .device .phone { zoom: 1 !important; position: absolute; left: 50%; top: 0; width: 402px; height: 874px;
+    transform: translateX(-50%) scale(var(--ps)); transform-origin: 50% 0; border-radius: 0 !important; box-shadow: none !important;
+    background: #000 !important; }
+  .device .phone > .island { display: none; }   /* the frame has its own Dynamic Island */
+  .gh { font: 500 15px/20px -apple-system, "SF Pro Text", system-ui, sans-serif; letter-spacing: -.01em; color: #6e6e73; text-decoration: none; }
+  .gh:hover { color: #111; }
+  .gh:focus-visible { outline: 2px solid #111; outline-offset: 4px; border-radius: 4px; }
 </style>
-<div class="wrap">
-  <section class="intro">
-    <p class="eyebrow">Product design project &middot; iOS</p>
-    <h1>Loose Ends</h1>
-    <p class="lede">Turns the people you keep meaning to see into plans. Each week it suggests friends you text but haven't seen, drafts the text, finds a time you're both free, and picks a spot nearby.</p>
-    <div class="note" role="note">
-      <b>This is a demo.</b> The people, plans and busy times are made up, and nothing here sends a text or touches a calendar.
-      The real app runs on an iPhone and reads your iMessages and Google Calendar through a companion app on your Mac.
-    </div>
-    <ul class="try">
-      <li><b>Swipe right</b> to make the plan, <b>left</b> to skip</li>
-      <li><b>Tap the black plan</b> to flip to another restaurant</li>
-      <li><b>Hold and drag it</b> to change the time</li>
-      <li><b>Tap the text</b> to edit it</li>
-    </ul>
-    <div class="actions">
-      <button class="ui" id="reset">Start over</button>
-      <button class="ui" id="jump" title="After you save picks, jump to the next week">Skip to next week</button>
-      <a class="ui gh" href="https://github.com/alexisgu1/loose-ends" target="_blank" rel="noopener">Code on GitHub &#8599;</a>
-    </div>
-    <p class="lock-label">On the lock screen every day</p>
-    <div class="lock-card"><div class="lock-faces"><i>R</i><i>O</i><i>H</i></div><p>Make plans with Ruby, Omar and Hana this week</p></div>
-  </section>
+<div class="stage">
   <main id="grid"></main>
+  <a class="gh" href="https://github.com/alexisgu1/loose-ends" target="_blank" rel="noopener">View the code on GitHub</a>
 </div>
 <main id="grid"></main>
 <script>
@@ -652,7 +651,16 @@ async function decodeTo(b, next, done) {
   await W8(300); done();
 }
 
-function fit() { const a = Math.min(innerWidth, document.documentElement.clientWidth) - 32; document.documentElement.style.setProperty("--fit", Math.min(1, a / 414)); }
+function fit() {
+  // device height = window minus margins and the link; the frame is 1426×2899, its screen 1372×2862 at (27, 19)
+  const H = Math.max(360, Math.min(innerHeight - 112, 900, (innerWidth - 32) * 2899 / 1426)), W = H * 1426 / 2899;   // fits narrow screens too
+  const k = H / 2899, sh = 2862 * k, sw = 1372 * k, ps = sh / 874;
+  const r = document.documentElement.style;
+  r.setProperty("--dev-w", W + "px"); r.setProperty("--dev-h", H + "px");
+  r.setProperty("--scr-x", 27 * k + "px"); r.setProperty("--scr-y", 19 * k + "px");
+  r.setProperty("--scr-w", sw + "px"); r.setProperty("--scr-h", sh + "px"); r.setProperty("--scr-r", 190 * k + "px");
+  r.setProperty("--ps", ps); r.setProperty("--fit", ps);   // the app's own scale, used by its drag math
+}
 function cardHTML(p, k, v) {
   const idea = ideaFor(VARIANTS.indexOf(v), p.name);
   const tm = state[VARIANTS.indexOf(v)].times?.[p.name]; if (tm) p = { ...p, ...tm };
@@ -864,7 +872,8 @@ function bindSwipe(i) {
   card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
 }
 function build() {
-  document.getElementById("grid").innerHTML = VARIANTS.map((v, i) => `<figure data-i="${i}"><div class="phone"></div></figure>`).join("");
+  document.getElementById("grid").innerHTML = VARIANTS.map((v, i) => `<figure data-i="${i}"><div class="device">
+    <div class="screen"><div class="phone"></div></div><img class="frame" src="bezel-frame.png" alt=""></div></figure>`).join("");
   VARIANTS.forEach((_, i) => draw(i));
 }
 document.addEventListener("click", e => {

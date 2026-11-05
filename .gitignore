@@ -12,3 +12,4 @@ ios/LooseEnds/Secrets.swift
 # design sandbox: iterations use real names, messages and calendar times. Only the public demo is shared.
 sandbox/*
 !sandbox/demo.html
+!sandbox/bezel-frame.png
