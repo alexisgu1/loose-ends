@@ -1,4 +1,5 @@
 import SwiftUI
+import SafariServices
 
 /// This week → (swipe through plans) → N plans made → Next week picker → Preferences saved.
 struct PlanDeckView: View {
@@ -127,10 +128,10 @@ struct FacesRail: View {
 struct EndScreen: View {
     @ObservedObject var deck: DeckModel
     let calendar: () -> Void
-    @Environment(\.openURL) private var openURL
-    /// The event itself if we have its link; otherwise Google Calendar.
+    @State private var showing: EventPage?
+    /// Shows the event's own page (title, time, location) right here; Google Calendar only if we have no link.
     private func open(_ url: URL?) {
-        if let url { openURL(url) } else { calendar() }
+        if let url { showing = EventPage(url: url) } else { calendar() }
     }
     var body: some View {
         let ppl = deck.all.filter { deck.sent.contains($0.id) }.sorted { $0.start < $1.start }
@@ -174,6 +175,7 @@ struct EndScreen: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .ignoresSafeArea(edges: .bottom)
+        .sheet(item: $showing) { SafariView(url: $0.url).ignoresSafeArea() }
     }
 
     /// "Sat 7:00 pm", "Today 7:00 pm", "Tomorrow 7:00 pm"
@@ -322,4 +324,23 @@ struct PressScale: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.smooth(duration: 0.2), value: configuration.isPressed)
     }
+}
+
+struct EventPage: Identifiable { let url: URL; var id: String { url.absoluteString } }
+
+/// The event's page on Google Calendar, opened inside the app. (Handing the link to iOS lets the
+/// Calendar app grab it and land on its home screen instead of the event.)
+struct SafariView: UIViewControllerRepresentable {
+    let url: URL
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        // the calendar.google.com form of the link goes straight to the event
+        var u = url
+        if var c = URLComponents(url: url, resolvingAgainstBaseURL: false), c.host == "www.google.com", c.path == "/calendar/event" {
+            c.host = "calendar.google.com"; c.path = "/calendar/event"; u = c.url ?? url
+        }
+        let vc = SFSafariViewController(url: u)
+        vc.preferredControlTintColor = .black
+        return vc
+    }
+    func updateUIViewController(_ vc: SFSafariViewController, context: Context) {}
 }
