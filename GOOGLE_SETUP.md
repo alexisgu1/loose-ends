@@ -28,11 +28,11 @@ Loose Ends uses your **UMich Google account** to:
 2. On your Mac, open <http://127.0.0.1:4321/auth/google> and sign in with your umich.edu account.
 3. You'll see "Google Calendar connected."
 
-If UMich blocks the sign-in ("This app is blocked" / "admin approval required"), that's UMich's Google policy. The app still works without it: Reach out cards just won't show a time.
+If UMich blocks the sign-in ("This app is blocked" / "admin approval required"), that's UMich's Google policy. The app still works without it: plans just default to tomorrow at 7 and nothing goes on your calendar.
 
 ## How it shows up
-On **Reach out**, after you tap **Next**, each card shows a time under the text, like
-`Thu 7:00 PM · you're both free`, and the draft becomes `wanna get dinner thu at 7pm?? i put it on my cal`.
-**Send** puts "Dinner with Owen" on your calendar, then sends the text (still a dry run while `TestMode.sendTexts` is off).
+- Each card in the deck gets an evening you're both free (people later in the deck start their search a day later, so plans spread across the week), with that evening's busy times shown as gray blocks. You see "Busy", never what anyone is doing.
+- **Swipe right** puts "Kang's with Nat" on **your** calendar at that time, with the place's address as the location. No invite goes to the friend while `SEND_INVITES = false`.
+- On the end screen, tap a plan to open its event.
 
-"You're both free" only appears when their calendar's free/busy is visible to you and the directory found exactly one person with that name. Otherwise it says "you're free" (only your calendar was checked).
+Free/busy for a friend only shows up when their calendar shares free/busy with you (common within umich.edu) and the directory found exactly one person with that name. Otherwise only your own calendar is checked.
