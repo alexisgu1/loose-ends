@@ -128,20 +128,46 @@ struct EndScreen: View {
     @ObservedObject var deck: DeckModel
     let calendar: () -> Void
     var body: some View {
-        let ppl = deck.all.filter { deck.sent.contains($0.id) }
-        VStack(spacing: 0) {
-            Spacer().frame(height: 288 - 62)   // faces start at 288 on the 8pt grid (62 is the status bar)
-            if !ppl.isEmpty {
-                OverlapFaces(names: ppl.map(\.name), stagger: false).padding(.bottom, 24)
+        let ppl = deck.all.filter { deck.sent.contains($0.id) }.sorted { $0.start < $1.start }
+        VStack(alignment: .leading, spacing: 0) {
+            Text(ppl.isEmpty ? "All caught up" : ppl.count == 1 ? "1 plan made" : "\(ppl.count) plans made")
+                .font(.deckTitle)
+                .padding(.horizontal, 16).padding(.top, 32)
+            // a small white card per plan, like the deck's card shrunk: who and when, then where
+            ScrollView {
+                VStack(spacing: 12) {
+                    ForEach(ppl) { p in
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack(spacing: 12) {
+                                Face(name: p.name)
+                                Text(p.name).font(.deckLabel)
+                                Spacer(minLength: 8)
+                                Text(EndScreen.when(p.start)).font(.deckLabel).foregroundStyle(.black.opacity(0.45))
+                            }
+                            Text(p.place).font(.deckMessage)
+                        }
+                        .padding(20)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundStyle(.black)
+                        .background(.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.top, 24)
+                .padding(.bottom, 24)
             }
-            Text(ppl.isEmpty ? "All caught up" : ppl.count == 1 ? "1 plan made this week" : "\(ppl.count) plans made this week")
-                .font(.deckTitle).multilineTextAlignment(.center)
-                .padding(.horizontal, 20)
-            Spacer()
+            .scrollIndicators(.hidden)
             BottomButtons(primary: ("Who do you want to see?", { deck.openPicker() }), secondary: ("Check your calendar", calendar), stagger: false)
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .ignoresSafeArea(edges: .bottom)
+    }
+
+    /// "Sat 7:00 pm", "Today 7:00 pm", "Tomorrow 7:00 pm"
+    static func when(_ d: Date) -> String {
+        let cal = Calendar.current
+        let day = cal.isDateInToday(d) ? "Today" : cal.isDateInTomorrow(d) ? "Tomorrow" : d.formatted(.dateTime.weekday(.abbreviated))
+        return day + " " + Fmt.clock(d.hourOfDay) + (d.hourOfDay < 12 ? " am" : " pm")
     }
 }
 
