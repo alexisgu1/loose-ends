@@ -286,12 +286,13 @@
     border-radius: var(--scr-r); overflow: hidden; background: #000; z-index: 1; }
   .device .phone, .device .chrome { position: absolute; left: var(--op-x); top: var(--op-y); width: 402px; height: 874px;
     transform: scale(var(--ps)); transform-origin: 0 0; }
-  .device .phone { zoom: 1 !important; border-radius: 0 !important; box-shadow: none !important; background: #000 !important; z-index: 1; }
+  .device .phone { zoom: 1 !important; border-radius: var(--scr-rad) !important; overflow: hidden !important; box-shadow: none !important; background: #000 !important; z-index: 1; }
+  .device .chrome { border-radius: var(--scr-rad); overflow: hidden; }
   .device .chrome { z-index: 2; pointer-events: none; color: #fff; font: 600 17px/22px -apple-system, "SF Pro Text", system-ui, sans-serif; letter-spacing: -.02em; }
   .device .frame { z-index: 3; }
   /* status bar, as on iPhone 17 Pro: time in the left ear, signal / Wi-Fi / battery in the right */
-  .sb-time { position: absolute; left: 51px; top: 19px; width: 54px; text-align: center; }
-  .sb-icons { position: absolute; right: 37px; top: 21px; display: flex; gap: 6px; align-items: center; }
+  /* the status bar from the v3 portfolio (public/altrix/status-bar.svg), white on the dark app like cb-status-light */
+  .sb { position: absolute; left: 0; top: 0; width: 402px; height: 54px; filter: invert(1); }
 
   /* ---- spacing, one-to-one with the iOS app (status bar 62pt) ---- */
   .title { top: 94px !important; left: 16px; line-height: 41px; }                 /* 32 below the status bar */
@@ -689,8 +690,10 @@ function fit() {
   r.setProperty("--scr-x", 27 * k + "px"); r.setProperty("--scr-y", 19 * k + "px");
   r.setProperty("--scr-w", sw + "px"); r.setProperty("--scr-h", sh + "px"); r.setProperty("--scr-r", 190 * k + "px");
   // the app is drawn at the iPhone display's true size and place inside the frame: 1275×2766 at (76, 67)
-  const dps = 1275 * k / 402;
-  r.setProperty("--op-x", 76 * k + "px"); r.setProperty("--op-y", 67 * k + "px");
+  // tucked 6px (frame pixels) under the frame on every side so the screen meets it with no gap
+  const B = 6, dps = (1275 + 2 * B) * k / 402;
+  r.setProperty("--op-x", (76 - B) * k + "px"); r.setProperty("--op-y", (67 - B) * k + "px");
+  r.setProperty("--scr-rad", (180 + B) / ((1275 + 2 * B) / 402) + "px");   // the opening's corner radius, in app points
   r.setProperty("--ps", dps); r.setProperty("--fit", dps);
 }
 function cardHTML(p, k, v) {
@@ -906,7 +909,7 @@ function bindSwipe(i) {
 function build() {
   document.getElementById("grid").innerHTML = VARIANTS.map((v, i) => `<figure data-i="${i}"><div class="device">
     <div class="phone"></div>
-    <div class="chrome"><span class="sb-time">9:41</span><span class="sb-icons">${sbIcons()}</span></div>
+    <div class="chrome"><img class="sb" src="status-bar.svg" alt=""></div>
     <img class="frame" src="bezel-frame.png" alt=""></div></figure>`).join("");
   VARIANTS.forEach((_, i) => draw(i));
 }

@@ -13,3 +13,4 @@ ios/LooseEnds/Secrets.swift
 sandbox/*
 !sandbox/demo.html
 !sandbox/bezel-frame.png
+!sandbox/status-bar.svg
