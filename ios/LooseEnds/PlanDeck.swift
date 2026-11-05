@@ -5,37 +5,36 @@ import SwiftUI
 struct NearPlace: Equatable {
     let name: String
     let emoji: String
-    var verb = "get"              // "Let's get Miss Kim", "Let's study at Hatcher Library"
+    var verb = "get"              // "Let's get Kang's", "Let's study at Hatcher Library"
     var aliases: [String] = []    // other ways people type it ("the dude", "duderstadt")
     var phrase: String { "\(verb) \(name)" }
 }
 
 enum Near {
-    // Sit-down restaurants downtown, State St, South U and Kerrytown, plus campus hangouts.
+    // Restaurants on State Street and South University only (a few minutes' walk from the Diag), plus campus hangouts.
     static let all: [NearPlace] = [
-        .init(name: "Miss Kim", emoji: "🥢"), .init(name: "Sava's", emoji: "🍝"), .init(name: "Tomukun", emoji: "🍜"),
-        .init(name: "Slurping Turtle", emoji: "🍜"), .init(name: "Frita Batidos", emoji: "🍔"), .init(name: "Mani Osteria", emoji: "🍕"),
-        .init(name: "Jerusalem Garden", emoji: "🧆"), .init(name: "Zingerman's Deli", emoji: "🥪", aliases: ["zingerman's", "zingermans"]),
-        .init(name: "Pizza House", emoji: "🍕"), .init(name: "Madras Masala", emoji: "🍛"), .init(name: "Ahmo's", emoji: "🥙", aliases: ["ahmos"]),
-        .init(name: "Isalita", emoji: "🌮"), .init(name: "Jolly Pumpkin", emoji: "🍺"), .init(name: "Aventura", emoji: "🥘"), .init(name: "Spiedo", emoji: "🍝"),
+        // State Street
+        .init(name: "Sava's", emoji: "🍝", aliases: ["savas"]), .init(name: "Mister Spots", emoji: "🥪", aliases: ["mr spots", "mr. spots"]),
+        .init(name: "sweetgreen", emoji: "🥗"),
+        // South University
+        .init(name: "Kang's", emoji: "🍲", aliases: ["kangs"]), .init(name: "No Thai", emoji: "🍜", aliases: ["no thai!"]),
+        .init(name: "South U Pizza", emoji: "🍕"), .init(name: "BTB Burrito", emoji: "🌯", aliases: ["btb"]),
+        .init(name: "Good Time Charley's", emoji: "🍔", aliases: ["charley's", "charleys"]), .init(name: "Raising Cane's", emoji: "🍗", aliases: ["canes", "cane's"]),
         // hangouts
         .init(name: "Hatcher Library", emoji: "📚", verb: "study at", aliases: ["hatcher", "the grad", "grad library"]),
         .init(name: "the Dude", emoji: "💻", verb: "lock in at", aliases: ["duderstadt", "dude"]),
         .init(name: "the Arb", emoji: "🌳", verb: "walk", aliases: ["arboretum", "nichols arb", "arb"]),
         .init(name: "the Diag", emoji: "☀️", verb: "hang on", aliases: ["diag"]),
         .init(name: "Michigan Theater", emoji: "🎬", verb: "catch a movie at", aliases: ["michigan theater", "state theatre"]),
-        .init(name: "Literati", emoji: "📖", verb: "browse", aliases: ["literati bookstore"]),
-        .init(name: "Comet Coffee", emoji: "☕️", verb: "grab coffee at", aliases: ["comet"]),
+        .init(name: "M-36 Coffee", emoji: "☕️", verb: "grab coffee at", aliases: ["m36", "m-36"]),
     ]
     static func named(_ n: String) -> NearPlace? { all.first { $0.name == n } }
     /// More emojis per place for the confetti.
     static let confetti: [String: String] = [
-        "Miss Kim": "🥢🍜🍚🥟", "Sava's": "🍝🍷🥗", "Tomukun": "🍜🥢🍥", "Bubble Island": "🧋🍡", "Comet Coffee": "☕️🥐",
-        "Frita Batidos": "🍔🥤🍟", "Jerusalem Garden": "🧆🥙🫓", "Slurping Turtle": "🍜🥢🍣", "Blank Slate": "🍦🍨", "Zingerman's Deli": "🥪🥯🧀",
-        "Pizza House": "🍕🥤", "Mani Osteria": "🍕🍷", "Madras Masala": "🍛🫓", "Ahmo's": "🥙🧆",
-        "Isalita": "🌮🌯", "Jolly Pumpkin": "🍺🍕", "Aventura": "🥘🍷🫒", "Spiedo": "🍝🍷",
+        "Sava's": "🍝🍷🥗", "Mister Spots": "🥪🍗🍟", "sweetgreen": "🥗🥑", "Kang's": "🍲🥢🍚", "No Thai": "🍜🥢🌶️",
+        "South U Pizza": "🍕🥤", "BTB Burrito": "🌯🌮", "Good Time Charley's": "🍔🍻🍟", "Raising Cane's": "🍗🍟🥤",
         "Hatcher Library": "📚✏️📖", "the Dude": "💻☕️🎧", "the Arb": "🌳🍂🌿", "the Diag": "☀️🐿️🌳", "Michigan Theater": "🎬🍿🎟️",
-        "Literati": "📖📚", "Comet Coffee": "☕️🥐",
+        "M-36 Coffee": "☕️🥐",
     ]
 
     static func random(excluding current: String) -> NearPlace {

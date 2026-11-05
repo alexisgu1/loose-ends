@@ -35,8 +35,8 @@ enum PlansActivity {
         var first = at(13, 30), second = at(19, 0)
         if first < now { first = max(now.addingTimeInterval(3600), first) }   // keep both in the future
         if second <= first { second = first.addingTimeInterval(4 * 3600) }
-        remind([.init(name: "Ruby", place: "Zingerman's Deli", start: first),
-                .init(name: "Omar", place: "Miss Kim", start: second)])
+        remind([.init(name: "Ruby", place: "Kang's", start: first),
+                .init(name: "Omar", place: "Sava's", start: second)])
     }
 
     static func endAll() {

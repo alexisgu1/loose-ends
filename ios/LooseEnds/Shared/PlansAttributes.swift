@@ -24,7 +24,7 @@ extension PlansAttributes.ContentState {
 }
 
 extension PlansAttributes.ContentState {
-    /// "Zingerman's Deli with Ruby at 1:30 and Miss Kim with Omar at 7:00"
+    /// "Kang's with Ruby at 1:30 and Sava's with Omar at 7:00"
     var reminderLine: String {
         let parts = today.map { "\($0.place) with \($0.name) \($0.when)" }
         guard parts.count > 1 else { return parts.first ?? "" }
@@ -47,7 +47,7 @@ extension PlansAttributes.Reminder {
     var time: String { start.formatted(.dateTime.hour().minute()).lowercased().replacingOccurrences(of: "\u{202F}", with: " ") }
 }
 
-/// Today's plans, one row each: face, "Miss Kim with Omar", the time on the right.
+/// Today's plans, one row each: face, "Sava's with Omar", the time on the right.
 struct ReminderRows: View {
     let plans: [PlansAttributes.Reminder]
     var ink: Color = .black

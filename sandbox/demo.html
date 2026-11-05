@@ -301,10 +301,10 @@
 <script>
 let PLANS = [];
 const IDEAS = {
-  Maya: { place: "Miss Kim", text: "" },
+  Maya: { place: "Kang's", text: "" },
   Jonah: { place: "Sava's", text: "" },
-  Priya: { place: "Tomukun", text: "" },
-  Leo: { place: "Frita Batidos", text: "" },
+  Priya: { place: "No Thai", text: "" },
+  Leo: { place: "Mister Spots", text: "" },
 };
 const X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>';
 // short: 7, 12:30
@@ -409,11 +409,9 @@ let ORIG = [];
 
 // ---- Randomize: places within ~1 mile of the UMich Diag (walking distances are approximate).
 const NEAR = [
-  { place: "Miss Kim", emoji: "🥢" }, { place: "Sava's", emoji: "🍝" }, { place: "Tomukun", emoji: "🍜" },
-  { place: "Slurping Turtle", emoji: "🍜" }, { place: "Frita Batidos", emoji: "🍔" }, { place: "Mani Osteria", emoji: "🍕" },
-  { place: "Jerusalem Garden", emoji: "🧆" }, { place: "Zingerman's Deli", emoji: "🥪" }, { place: "Pizza House", emoji: "🍕" },
-  { place: "Madras Masala", emoji: "🍛" }, { place: "Ahmo's", emoji: "🥙" }, { place: "Isalita", emoji: "🌮" },
-  { place: "Jolly Pumpkin", emoji: "🍺" }, { place: "Aventura", emoji: "🥘" }, { place: "Spiedo", emoji: "🍝" },
+  { place: "Sava's", emoji: "🍝" }, { place: "Mister Spots", emoji: "🥪" }, { place: "sweetgreen", emoji: "🥗" },
+  { place: "Kang's", emoji: "🍲" }, { place: "No Thai", emoji: "🍜" }, { place: "South U Pizza", emoji: "🍕" },
+  { place: "BTB Burrito", emoji: "🌯" }, { place: "Good Time Charley's", emoji: "🍔" }, { place: "Raising Cane's", emoji: "🍗" },
 ];
 setTimeout(() => NEAR.forEach(n => { if (!EMOJI[n.place]) EMOJI[n.place] = n.emoji; }));
 const DICE = '<svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="2.5" width="15" height="15" rx="4"/><circle cx="7" cy="7" r="1.2" fill="currentColor" stroke="none"/><circle cx="13" cy="13" r="1.2" fill="currentColor" stroke="none"/><circle cx="13" cy="7" r="1.2" fill="currentColor" stroke="none"/><circle cx="7" cy="13" r="1.2" fill="currentColor" stroke="none"/><circle cx="10" cy="10" r="1.2" fill="currentColor" stroke="none"/></svg>';
@@ -690,11 +688,11 @@ function endHTML(st, v) {
 }
 // ---- Next week: pick who you want to see, save, and they show up as next week's deck.
 const NEXT_PEOPLE = [
-  { name: "Ruby", place: "Zingerman's Deli", text: "zingerman's monday?? we need to catch up", day: 0, h: 12, m: 30 },
-  { name: "Omar", place: "Jerusalem Garden", text: "jerusalem garden tuesday night??", day: 1, h: 19 },
-  { name: "Hana", place: "Slurping Turtle", text: "slurping turtle wednesday? my treat", day: 2, h: 19 },
-  { name: "Eli", place: "Pizza House", text: "pizza house thursday at 7??", day: 3, h: 19 },
-  { name: "Nora", place: "Isalita", text: "isalita friday after class??", day: 4, h: 18 },
+  { name: "Ruby", place: "sweetgreen", text: "sweetgreen monday?? we need to catch up", day: 0, h: 12, m: 30 },
+  { name: "Omar", place: "BTB Burrito", text: "btb tuesday night??", day: 1, h: 19 },
+  { name: "Hana", place: "South U Pizza", text: "south u pizza wednesday? my treat", day: 2, h: 19 },
+  { name: "Eli", place: "Good Time Charley's", text: "charley's thursday at 7??", day: 3, h: 19 },
+  { name: "Nora", place: "Raising Cane's", text: "canes friday after class??", day: 4, h: 18 },
 ];
 const CK_SVG = '<svg class="ck" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#fff"/><path d="M5.9 10.4l2.7 2.8 5.5-6.4" fill="none" stroke="#000" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function pickHTML(st) {
@@ -826,8 +824,8 @@ function decide(i, card, dir, fromX = 0) {
   setTimeout(() => { st.gone.push(name); if (dir > 0) st.sent.push(name); draw(i); }, 520);
 }
 // Emoji confetti for the kind of plan: coffee gets coffee, Korean food gets Korean food.
-const EMOJI = { "Miss Kim": "🥢🍜🍚🥟", "Sava's": "🍝🍷🥗", "Tomukun": "🍜🥢🍥", "Bubble Island": "🧋🧋🍡", "Comet Coffee": "☕️🥐☕️",
-  "Frita Batidos": "🍔🥤🍟", "Jerusalem Garden": "🧆🥙🫓", "Slurping Turtle": "🍜🥢🍣", "Blank Slate": "🍦🍨🍦", "Zingerman's": "🥪🥯🧀" };
+const EMOJI = { "Sava's": "🍝🍷🥗", "Mister Spots": "🥪🍗🍟", "sweetgreen": "🥗🥑", "Kang's": "🍲🥢🍚", "No Thai": "🍜🥢🌶️",
+  "South U Pizza": "🍕🥤", "BTB Burrito": "🌯🌮", "Good Time Charley's": "🍔🍻🍟", "Raising Cane's": "🍗🍟🥤" };
 const GUESS = [[/coffee|cafe|roast|espresso/i, "☕️🥐"], [/boba|tea|bubble/i, "🧋"], [/pizza/i, "🍕"], [/sushi|ramen|noodle|turtle/i, "🍜🍣"],
   [/taco|mex/i, "🌮🌯"], [/burger/i, "🍔🍟"], [/ice cream|gelato|dessert/i, "🍦🍨"], [/bar|brew|beer/i, "🍻"]];
 let CONFETTI = "cannons";
@@ -892,9 +890,7 @@ document.addEventListener("click", e => {
 });
 // Edit the place in the text → the invite follows. Known Ann Arbor spots first (any case),
 // otherwise the capitalized words after "at" / "get" / "to".
-const PLACES = ["Miss Kim", "Sava's", "Tomukun", "Bubble Island", "Zingerman's", "Frita Batidos", "Jerusalem Garden", "Slurping Turtle",
-  "Pizza House", "Cosmo", "Tealicious", "Sweetwaters", "Literati", "Blank Slate", "Mani Osteria", "Aventura", "Isalita", "Blue LLama",
-  "Comet Coffee", "RoosRoast", "Chipotle", "Starbucks", "Panera", "Sava", "Ahmo's", "Taste Kitchen", "Kang's", "No Thai", "Madras Masala"];
+const PLACES = ["Sava's", "Mister Spots", "sweetgreen", "Kang's", "No Thai", "South U Pizza", "BTB Burrito", "Good Time Charley's", "Raising Cane's"];
 function findPlace(t) {
   const low = t.toLowerCase().replace(/[’]/g, "'");
   let best = null;
