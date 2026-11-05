@@ -21,7 +21,7 @@ struct PlanDeckView: View {
                         .opacity(deck.phase == .deck ? 1 : 0)
                         .allowsHitTesting(deck.phase == .deck)
                     if deck.phase == .end {
-                        EndScreen(deck: deck, calendar: openCalendar).compositingGroup().transition(.opacity)
+                        EndScreen(deck: deck, calendar: openCalendar).transition(.identity)   // its parts animate in on their own
                     }
                 }
             case .pick: PickScreen(deck: deck).transition(.opacity)
@@ -133,10 +133,11 @@ struct EndScreen: View {
             Text(ppl.isEmpty ? "All caught up" : ppl.count == 1 ? "1 plan made" : "\(ppl.count) plans made")
                 .font(.deckTitle)
                 .padding(.horizontal, 16).padding(.top, 32)
+                .modifier(RiseIn(delay: 0.1, distance: 0))   // the title just fades in
             // a small white card per plan, like the deck's card shrunk: who and when, then where
             ScrollView {
                 VStack(spacing: 12) {
-                    ForEach(ppl) { p in
+                    ForEach(Array(ppl.enumerated()), id: \.element.id) { k, p in
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(spacing: 12) {
                                 Face(name: p.name)
@@ -150,6 +151,7 @@ struct EndScreen: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(.black)
                         .background(.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+                        .modifier(RiseIn(delay: 0.35 + Double(k) * 0.09))   // then the cards move up into place, one after another
                     }
                 }
                 .padding(.horizontal, 16)
@@ -158,6 +160,7 @@ struct EndScreen: View {
             }
             .scrollIndicators(.hidden)
             BottomButtons(primary: ("Who do you want to see?", { deck.openPicker() }), secondary: ("Check your calendar", calendar), stagger: false)
+                .modifier(RiseIn(delay: 0.45 + Double(ppl.count) * 0.09, distance: 0))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .ignoresSafeArea(edges: .bottom)
@@ -286,5 +289,18 @@ private struct MaybeEaseIn: ViewModifier {
     var order = 0
     func body(content: Content) -> some View {
         if on { content.easeIn(order: order) } else { content }
+    }
+}
+
+/// Fades in and rises a few points into place, once, after `delay`.
+struct RiseIn: ViewModifier {
+    var delay: Double
+    var distance: CGFloat = 16
+    @State private var shown = false
+    func body(content: Content) -> some View {
+        content
+            .opacity(shown ? 1 : 0)
+            .offset(y: shown ? 0 : distance)
+            .onAppear { withAnimation(.smooth(duration: 0.5).delay(delay)) { shown = true } }
     }
 }
