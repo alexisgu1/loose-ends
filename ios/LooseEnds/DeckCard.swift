@@ -69,7 +69,9 @@ struct DeckCard: View {
             .padding(.top, 20)
                 .onChange(of: plan.text) { _, t in
                     // edit the place in the text and the plan follows
-                    if let p = Near.find(in: t), p.name != plan.place { plan.place = p.name }
+                    // known spots first ("kang's", "the dude"), otherwise whatever place you wrote
+                    let place = Near.find(in: t)?.name ?? Near.guess(in: t)
+                    if let place, place != plan.place { plan.place = place }
                 }
             DayCalendar(plan: $plan, active: isTop, locked: $locked)
                 .padding(.top, 40)

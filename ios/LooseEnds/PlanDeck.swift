@@ -83,6 +83,23 @@ enum Near {
         }
         return best?.0
     }
+    /// A place that isn't on the list: the words after "get / at / to / try / grab", up to the day or the
+    /// end of the sentence. "Let's get Chipotle this Friday!" → "Chipotle", "lock in at the UGLi tonight" → "the UGLi".
+    static func guess(in text: String) -> String? {
+        let pattern = #"(?i)\b(?:get|at|to|try|grab|hit|visit)\s+(.+?)(?=\s+(?:this|tonight|tomorrow|today|on|next|at|for|sometime|soon)\b|[!?.,]|$)"#
+        guard let re = try? NSRegularExpression(pattern: pattern) else { return nil }
+        let skip: Set<String> = ["dinner", "lunch", "food", "coffee", "drinks", "boba", "brunch", "breakfast", "together", "a bite", "it", "you", "me", "us"]
+        // "get dinner at Sava's": skip "dinner", take the next one
+        for m in re.matches(in: text, range: NSRange(text.startIndex..., in: text)) {
+            guard let r = Range(m.range(at: 1), in: text) else { continue }
+            let place = text[r].trimmingCharacters(in: .whitespacesAndNewlines)
+            guard (2...32).contains(place.count), !skip.contains(place.lowercased()) else { continue }
+            // "chipotle" → "Chipotle"; anything already capitalized ("the UGLi") stays as typed
+            return place == place.lowercased() && !place.hasPrefix("the ") ? place.prefix(1).uppercased() + place.dropFirst() : place
+        }
+        return nil
+    }
+
     static func emojis(for place: String) -> [String] {
         let s = confetti[place] ?? all.first { $0.name == place }?.emoji ?? "🎉✨🥳"
         return s.map(String.init).filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
