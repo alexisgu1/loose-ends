@@ -304,7 +304,7 @@
   .end-acts button { height: 56px; }
   .pks { top: 167px !important; gap: 24px !important; }                            /* picker: 32 under the title, 24 apart */
   /* end screen: a card per plan, as in the app */
-  .elist { position: absolute; top: 159px; left: 16px; right: 16px; bottom: 168px; overflow-y: auto; scrollbar-width: none;
+  .elist { position: absolute; top: 159px; left: 0; right: 0; padding: 0 16px; bottom: 168px; overflow-y: auto; scrollbar-width: none;
     display: flex; flex-direction: column; gap: 12px; }
   .elist::-webkit-scrollbar { display: none; }
   .ec { flex: none; background: #fff; color: #000; border-radius: 24px; padding: 20px; display: grid; gap: 12px;
@@ -314,6 +314,12 @@
   .ec .hd span { margin-left: auto; font-size: 15px; line-height: 20px; font-weight: 500; color: rgba(0,0,0,.45); }
   .ec .pl { font-size: 22px; line-height: 32px; letter-spacing: -.01em; }
   .ec .photo { width: 40px; height: 40px; font-size: 17px; color: #fff; }
+  /* swipe a plan left to show a trash button, as in the app */
+  .erow { position: relative; flex: none; touch-action: pan-y; }
+  .erow .ec { position: relative; z-index: 1; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+  .edel { position: absolute; top: 0; bottom: 0; right: 0; width: 72px; border: 0; border-radius: 24px; background: #ff3b30;
+    display: grid; place-items: center; cursor: pointer; opacity: 0; padding: 0; }
+  .edel:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
   .etitle { opacity: 0; animation: fadeIn .5s .1s ease-out forwards; }
   @keyframes riseIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -987,9 +993,40 @@ function endHTML(st, v) {
     return day + " " + fmtS(new Date(d)) + (new Date(d).getHours() < 12 ? " am" : " pm"); };
   const title = ppl.length ? (ppl.length === 1 ? "1 plan made" : ppl.length + " plans made") : "All caught up";
   return `<div class="title etitle">${title}</div>
-    <div class="elist">${ppl.map((p, k) => `<div class="ec" style="animation-delay:${350 + k * 90}ms">
+    <div class="elist">${ppl.map((p, k) => `<div class="erow" data-name="${p.name}"><button class="edel" aria-label="Delete plan with ${p.name}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg></button><div class="ec" style="animation-delay:${350 + k * 90}ms">
       <div class="hd"><div class="photo">${p.name[0]}</div><b>${p.name}</b><span>${when(p.start)}</span></div>
-      <div class="pl">${(ideaFor ? ideaFor(0, p.name) : IDEAS[p.name]).place}</div></div>`).join("")}</div>
+      <div class="pl">${(ideaFor ? ideaFor(0, p.name) : IDEAS[p.name]).place}</div></div></div>`).join("")}</div>
     <div class="end-acts" style="animation-delay:${450 + ppl.length * 90}ms"><button class="btn1">Who do you want to see?</button><button class="btn2">Check your calendar</button></div>`;
 }
+
+// swipe a plan card left to reveal its trash button; tap it to remove the plan
+(() => {
+  const OPEN = 84; let row = null, x0 = 0, y0 = 0, base = 0, dx = 0, drag = false;
+  const ecOf = r => r.querySelector(".ec"), z = r => r.closest(".phone").getBoundingClientRect().width / 402;
+  const setX = (r, x, anim) => { const ec = ecOf(r), del = r.querySelector(".edel");
+    ec.style.transition = del.style.transition = anim ? "translate .3s cubic-bezier(.2,.9,.3,1), opacity .2s" : "none";
+    ec.style.translate = x ? `${x}px 0` : ""; del.style.opacity = Math.min(1, -x / OPEN); r.dataset.x = x; };
+  const closeAll = except => document.querySelectorAll(".erow").forEach(r => { if (r !== except && +r.dataset.x) setX(r, 0, true); });
+  document.addEventListener("pointerdown", e => {
+    if (e.target.closest(".edel")) return;
+    const r = e.target.closest(".erow"); closeAll(r); if (!r) return;
+    row = r; x0 = e.clientX; y0 = e.clientY; base = +r.dataset.x || 0; dx = 0; drag = false;
+  }, true);
+  document.addEventListener("pointermove", e => { if (!row) return;
+    const mx = (e.clientX - x0) / z(row), my = (e.clientY - y0) / z(row);
+    if (!drag) { if (Math.abs(mx) < 6) return; if (Math.abs(my) > Math.abs(mx)) { row = null; return; } drag = true; }
+    dx = Math.min(0, base + mx); if (dx < -OPEN) dx = -OPEN + (dx + OPEN) / 3; setX(row, dx, false); });
+  const up = () => { if (!row) return; if (drag) setX(row, dx < -OPEN / 2 ? -OPEN : 0, true); row = null; };
+  document.addEventListener("pointerup", up); document.addEventListener("pointercancel", up);
+  document.addEventListener("click", e => {
+    const del = e.target.closest(".edel"); if (!del) return; e.stopPropagation();
+    const r = del.closest(".erow"), name = r.dataset.name, fig = r.closest("figure"), st = state[+fig.dataset.i];
+    st.sent = st.sent.filter(n => n !== name);
+    const h = r.offsetHeight;
+    r.animate([{ height: h + "px", opacity: 1, marginBottom: "0px" }, { height: "0px", opacity: 0, marginBottom: "-12px" }],
+      { duration: 280, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" }).onfinish = () => r.remove();
+    const n = st.sent.length, t = fig.querySelector(".etitle");
+    if (t) t.textContent = n ? (n === 1 ? "1 plan made" : n + " plans made") : "All caught up";
+  }, true);
+})();
 </script>
