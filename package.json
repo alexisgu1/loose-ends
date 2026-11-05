@@ -1,0 +1,13 @@
+{
+  "name": "loose-ends",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A nightly list of people worth texting, with drafts in your voice.",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-sqlite --no-warnings=ExperimentalWarning server.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.5.0"
+  }
+}
