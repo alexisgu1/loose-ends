@@ -49,6 +49,7 @@ struct DeckCard: View {
             ZStack(alignment: .topLeading) {
                 if editingText {
                     TextField("", text: $plan.text, axis: .vertical)
+                        .tint(.black)   // the app tint is white; on the white card the cursor needs to be black to show
                         .font(.deckMessage)
                         .lineSpacing(6)
                         .focused($editing)
@@ -76,7 +77,8 @@ struct DeckCard: View {
         .padding(20)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .foregroundStyle(.black)
-        .background(RoundedRectangle(cornerRadius: 32, style: .continuous).fill(isTop ? Color.white : Color(white: 0.914)))
+        .background(RoundedRectangle(cornerRadius: 32, style: .continuous).fill(isTop ? Color.white : Color(white: 0.914))
+            .onTapGesture { hideKeyboard() })   // tap anywhere on the card outside the text to finish editing
         .overlay(RoundedRectangle(cornerRadius: 32, style: .continuous).fill(Color.black.opacity(Double(depth) * 0.18)).allowsHitTesting(false))
         .offset(x: dx)
         .rotationEffect(.degrees(Double(dx) / 30))
@@ -179,6 +181,7 @@ struct DayCalendar: View {
                                          .init(color: .black, location: 0.86), .init(color: .clear, location: 1)],
                                  startPoint: .top, endPoint: .bottom).padding(.horizontal, -24))
             .simultaneousGesture(scroll)
+            .onTapGesture { hideKeyboard() }
             .onAppear { viewH = geo.size.height; center() }
             .onChange(of: geo.size.height) { _, h in viewH = h }
         }
@@ -313,4 +316,9 @@ struct DayCalendar: View {
         guard viewH > 0 else { return }
         offset = clamp(y(plan.startHour) + CGFloat(plan.duration) * Self.pxh / 2 - viewH / 2)
     }
+}
+
+/// Ends editing wherever the cursor is.
+func hideKeyboard() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }

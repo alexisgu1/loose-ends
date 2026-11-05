@@ -1,0 +1,505 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		035E9A3E12CA955B58663E53 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FE55F04797D05C74242278 /* Store.swift */; };
+		057D27801A18894B444B3568 /* TestMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6FFEC8F265373DF5815414 /* TestMode.swift */; };
+		0B64F22BAE1BCB5451CB6643 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE366D42EB5EF557B9F9B30 /* CardView.swift */; };
+		2C84F30D726687E4DEE02F65 /* LooseEndsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C091B13E40554E91ED62B7 /* LooseEndsApp.swift */; };
+		32347B7D4DA3C74D30E7F1BA /* DeckCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BECFCBEE27BBE08001E9F12 /* DeckCard.swift */; };
+		37DF6EE2D50594D6E6AAC676 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE09169DA7B76DAF5B00AE8 /* Secrets.swift */; };
+		3DEACA7406E9FAE4BB1A9B25 /* PlansActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E774E6AFB9F16BBB29611B /* PlansActivity.swift */; };
+		453A14CFB745752D5DF23899 /* LooseEndsWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FC35EC8C72DB64DA4BE1B2B7 /* LooseEndsWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		46751078D405CCB0E5A60D05 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4950EC6F3B2E0C225E8028B9 /* SettingsView.swift */; };
+		4BDC04498F33C552F740DE39 /* TonightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9A46CFB0CC470F0434387D /* TonightView.swift */; };
+		5844AE51E619538FA3CA84B9 /* PlansAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A711441A8F9526AED6E91ED /* PlansAttributes.swift */; };
+		5B1EB47BE4A61ECE591CF3CF /* PlansAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A711441A8F9526AED6E91ED /* PlansAttributes.swift */; };
+		8804E78E6B60C248F5D1EEE1 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCADE2C5E814CC84E045997 /* Theme.swift */; };
+		8C72F7D46918D0BDF75D8CFC /* PlanDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F1F2F7A1D93540961C9051 /* PlanDeckView.swift */; };
+		90CA60D557DC989916B80C46 /* PlanDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CA2CA80E180B98703FB90C /* PlanDeck.swift */; };
+		963460017CE060A72EB493F1 /* Confetti.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD846449128D7240A8266C95 /* Confetti.swift */; };
+		A13D3641DB6F079A61BF3908 /* SendSafety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0A640A17F323B1E7436974 /* SendSafety.swift */; };
+		B06D081C5D7CE925857C14E0 /* Nudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED1B83EB2CEBEF19F1B9386 /* Nudge.swift */; };
+		B25ECA76193AE7EE4C74113D /* PlansLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78ACE19913D2E35FA4C6D4B /* PlansLiveActivity.swift */; };
+		BA44A44D8ADE25F4C621D985 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B028A17DC143FD3756E5401 /* Models.swift */; };
+		D0F164E90784204C4CE3F1CC /* HomeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC5E3C7A5B5B2DE14A660A /* HomeCard.swift */; };
+		D6ABF4F2336867908AC02D79 /* QuietCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4916CCE3DF2DC49C8F77A644 /* QuietCard.swift */; };
+		FDA845BCC0A7C10AE10D9F68 /* FlowViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB4C8B357E69FA90CF524C /* FlowViews.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E8D6310809928586CBF0E69C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D797B1C9EB6265CCCBB74C4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF15FBBDED4750ECE02F63BB;
+			remoteInfo = LooseEndsWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		56B047E4EE8D36679AAC49A2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				453A14CFB745752D5DF23899 /* LooseEndsWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		01CA2CA80E180B98703FB90C /* PlanDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDeck.swift; sourceTree = "<group>"; };
+		19AC802BD47B3E8CC77F06DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2BECFCBEE27BBE08001E9F12 /* DeckCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckCard.swift; sourceTree = "<group>"; };
+		3B028A17DC143FD3756E5401 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		3DE8D05C23EB31BA66354F55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4916CCE3DF2DC49C8F77A644 /* QuietCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietCard.swift; sourceTree = "<group>"; };
+		4950EC6F3B2E0C225E8028B9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4D0A640A17F323B1E7436974 /* SendSafety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSafety.swift; sourceTree = "<group>"; };
+		5DE09169DA7B76DAF5B00AE8 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		77FE55F04797D05C74242278 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		7A711441A8F9526AED6E91ED /* PlansAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansAttributes.swift; sourceTree = "<group>"; };
+		84C091B13E40554E91ED62B7 /* LooseEndsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooseEndsApp.swift; sourceTree = "<group>"; };
+		9ED1B83EB2CEBEF19F1B9386 /* Nudge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nudge.swift; sourceTree = "<group>"; };
+		A3AC5E3C7A5B5B2DE14A660A /* HomeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCard.swift; sourceTree = "<group>"; };
+		BD846449128D7240A8266C95 /* Confetti.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Confetti.swift; sourceTree = "<group>"; };
+		C01661EF1A70EB12DA0011D5 /* LooseEnds.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LooseEnds.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5DB4C8B357E69FA90CF524C /* FlowViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowViews.swift; sourceTree = "<group>"; };
+		C78ACE19913D2E35FA4C6D4B /* PlansLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansLiveActivity.swift; sourceTree = "<group>"; };
+		CD9A46CFB0CC470F0434387D /* TonightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonightView.swift; sourceTree = "<group>"; };
+		CFCADE2C5E814CC84E045997 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		D8E774E6AFB9F16BBB29611B /* PlansActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansActivity.swift; sourceTree = "<group>"; };
+		D9F1F2F7A1D93540961C9051 /* PlanDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDeckView.swift; sourceTree = "<group>"; };
+		EB6FFEC8F265373DF5815414 /* TestMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMode.swift; sourceTree = "<group>"; };
+		FC35EC8C72DB64DA4BE1B2B7 /* LooseEndsWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LooseEndsWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEE366D42EB5EF557B9F9B30 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		5EF2447343ED55F19433C3C8 = {
+			isa = PBXGroup;
+			children = (
+				8E8DDA0661DB30D6CB8C3840 /* LooseEnds */,
+				9FCF6069EB1C83401082A012 /* LooseEndsWidget */,
+				81420812DBDC261D1486E6CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		81420812DBDC261D1486E6CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C01661EF1A70EB12DA0011D5 /* LooseEnds.app */,
+				FC35EC8C72DB64DA4BE1B2B7 /* LooseEndsWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8E8DDA0661DB30D6CB8C3840 /* LooseEnds */ = {
+			isa = PBXGroup;
+			children = (
+				FEE366D42EB5EF557B9F9B30 /* CardView.swift */,
+				BD846449128D7240A8266C95 /* Confetti.swift */,
+				2BECFCBEE27BBE08001E9F12 /* DeckCard.swift */,
+				C5DB4C8B357E69FA90CF524C /* FlowViews.swift */,
+				A3AC5E3C7A5B5B2DE14A660A /* HomeCard.swift */,
+				3DE8D05C23EB31BA66354F55 /* Info.plist */,
+				84C091B13E40554E91ED62B7 /* LooseEndsApp.swift */,
+				3B028A17DC143FD3756E5401 /* Models.swift */,
+				9ED1B83EB2CEBEF19F1B9386 /* Nudge.swift */,
+				01CA2CA80E180B98703FB90C /* PlanDeck.swift */,
+				D9F1F2F7A1D93540961C9051 /* PlanDeckView.swift */,
+				D8E774E6AFB9F16BBB29611B /* PlansActivity.swift */,
+				4916CCE3DF2DC49C8F77A644 /* QuietCard.swift */,
+				5DE09169DA7B76DAF5B00AE8 /* Secrets.swift */,
+				4D0A640A17F323B1E7436974 /* SendSafety.swift */,
+				4950EC6F3B2E0C225E8028B9 /* SettingsView.swift */,
+				77FE55F04797D05C74242278 /* Store.swift */,
+				EB6FFEC8F265373DF5815414 /* TestMode.swift */,
+				CFCADE2C5E814CC84E045997 /* Theme.swift */,
+				CD9A46CFB0CC470F0434387D /* TonightView.swift */,
+				B2684F5032495CE46E2237DB /* Shared */,
+			);
+			path = LooseEnds;
+			sourceTree = "<group>";
+		};
+		9FCF6069EB1C83401082A012 /* LooseEndsWidget */ = {
+			isa = PBXGroup;
+			children = (
+				19AC802BD47B3E8CC77F06DD /* Info.plist */,
+				C78ACE19913D2E35FA4C6D4B /* PlansLiveActivity.swift */,
+			);
+			path = LooseEndsWidget;
+			sourceTree = "<group>";
+		};
+		B2684F5032495CE46E2237DB /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7A711441A8F9526AED6E91ED /* PlansAttributes.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2771E45C66E4289C14D90FF8 /* LooseEnds */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D12B901E71E091B4F2A95C7 /* Build configuration list for PBXNativeTarget "LooseEnds" */;
+			buildPhases = (
+				E674D9B06F1AEAC3AFE2738F /* Sources */,
+				56B047E4EE8D36679AAC49A2 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AE15C8AF36098735351113FD /* PBXTargetDependency */,
+			);
+			name = LooseEnds;
+			packageProductDependencies = (
+			);
+			productName = LooseEnds;
+			productReference = C01661EF1A70EB12DA0011D5 /* LooseEnds.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BF15FBBDED4750ECE02F63BB /* LooseEndsWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 298ADCF30F2EBED00AFF2D54 /* Build configuration list for PBXNativeTarget "LooseEndsWidget" */;
+			buildPhases = (
+				017ED2F3D66AAEBCD296783F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LooseEndsWidget;
+			packageProductDependencies = (
+			);
+			productName = LooseEndsWidget;
+			productReference = FC35EC8C72DB64DA4BE1B2B7 /* LooseEndsWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D797B1C9EB6265CCCBB74C4D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 60669D6C11059AD1A36EAD1A /* Build configuration list for PBXProject "LooseEnds" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5EF2447343ED55F19433C3C8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 81420812DBDC261D1486E6CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2771E45C66E4289C14D90FF8 /* LooseEnds */,
+				BF15FBBDED4750ECE02F63BB /* LooseEndsWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		017ED2F3D66AAEBCD296783F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B1EB47BE4A61ECE591CF3CF /* PlansAttributes.swift in Sources */,
+				B25ECA76193AE7EE4C74113D /* PlansLiveActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E674D9B06F1AEAC3AFE2738F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B64F22BAE1BCB5451CB6643 /* CardView.swift in Sources */,
+				963460017CE060A72EB493F1 /* Confetti.swift in Sources */,
+				32347B7D4DA3C74D30E7F1BA /* DeckCard.swift in Sources */,
+				FDA845BCC0A7C10AE10D9F68 /* FlowViews.swift in Sources */,
+				D0F164E90784204C4CE3F1CC /* HomeCard.swift in Sources */,
+				2C84F30D726687E4DEE02F65 /* LooseEndsApp.swift in Sources */,
+				BA44A44D8ADE25F4C621D985 /* Models.swift in Sources */,
+				B06D081C5D7CE925857C14E0 /* Nudge.swift in Sources */,
+				90CA60D557DC989916B80C46 /* PlanDeck.swift in Sources */,
+				8C72F7D46918D0BDF75D8CFC /* PlanDeckView.swift in Sources */,
+				3DEACA7406E9FAE4BB1A9B25 /* PlansActivity.swift in Sources */,
+				5844AE51E619538FA3CA84B9 /* PlansAttributes.swift in Sources */,
+				D6ABF4F2336867908AC02D79 /* QuietCard.swift in Sources */,
+				37DF6EE2D50594D6E6AAC676 /* Secrets.swift in Sources */,
+				A13D3641DB6F079A61BF3908 /* SendSafety.swift in Sources */,
+				46751078D405CCB0E5A60D05 /* SettingsView.swift in Sources */,
+				035E9A3E12CA955B58663E53 /* Store.swift in Sources */,
+				057D27801A18894B444B3568 /* TestMode.swift in Sources */,
+				8804E78E6B60C248F5D1EEE1 /* Theme.swift in Sources */,
+				4BDC04498F33C552F740DE39 /* TonightView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AE15C8AF36098735351113FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF15FBBDED4750ECE02F63BB /* LooseEndsWidget */;
+			targetProxy = E8D6310809928586CBF0E69C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		17579FDF1EF83952873E11D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LooseEnds/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Loose Ends";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Loose Ends talks to the companion app on your Mac, which reads your messages.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexisgu.looseends;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		388B6D31A094AD04C03E00AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LooseEnds/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Loose Ends";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Loose Ends talks to the companion app on your Mac, which reads your messages.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexisgu.looseends;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		6FC222C758D08913B72B79B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LooseEndsWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Loose Ends";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexisgu.looseends.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		D24AC7F97C9E1E0BC459D33D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LooseEndsWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Loose Ends";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexisgu.looseends.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		DCD44585DC45EE74F20C3666 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		EAD5B68EE8359CBFD37279EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		298ADCF30F2EBED00AFF2D54 /* Build configuration list for PBXNativeTarget "LooseEndsWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D24AC7F97C9E1E0BC459D33D /* Debug */,
+				6FC222C758D08913B72B79B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4D12B901E71E091B4F2A95C7 /* Build configuration list for PBXNativeTarget "LooseEnds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17579FDF1EF83952873E11D6 /* Debug */,
+				388B6D31A094AD04C03E00AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		60669D6C11059AD1A36EAD1A /* Build configuration list for PBXProject "LooseEnds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAD5B68EE8359CBFD37279EC /* Debug */,
+				DCD44585DC45EE74F20C3666 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D797B1C9EB6265CCCBB74C4D /* Project object */;
+}

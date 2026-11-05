@@ -9,7 +9,7 @@ struct PlanDeckView: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Color.black.ignoresSafeArea().onTapGesture { hideKeyboard() }
             switch deck.phase {
             case .loading: ProgressView().tint(.white)
             case .failed(let msg): failed(msg)
