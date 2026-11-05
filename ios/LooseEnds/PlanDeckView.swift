@@ -7,6 +7,7 @@ struct PlanDeckView: View {
     @StateObject private var deck = DeckModel()
     @State private var showSettings = false
     @Environment(\.openURL) private var openURL
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
@@ -34,6 +35,12 @@ struct PlanDeckView: View {
         .preferredColorScheme(.dark)
         .sheet(isPresented: $showSettings) { SettingsView(deck: deck).environmentObject(store) }
         .task { await deck.load(store: store) }
+        // The daily lock-screen card: the moment you lock the phone (or leave the app) with plans still
+        // to make, the card is waiting on the lock screen with those people. Tap it to come back.
+        .onChange(of: scenePhase) { _, phase in
+            guard phase == .inactive, deck.phase == .deck, !deck.plans.isEmpty else { return }
+            PlansActivity.startNudge(names: deck.plans.map(\.name))
+        }
         .onOpenURL { _ in }   // looseends://deck from the lock screen / island just opens here
     }
 

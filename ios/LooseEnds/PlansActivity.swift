@@ -50,6 +50,19 @@ enum PlansActivity {
                 .init(name: "Omar", place: "Sava's", start: second)], hideAfter: nil)
     }
 
+    /// The daily "Make plans with …" card. Replaces an older nudge in place (no flicker), but never
+    /// covers a reminder of plans you just made.
+    static func startNudge(names: [String]) {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled, !names.isEmpty else { return }
+        let content = ActivityContent(state: PlansAttributes.ContentState(names: Array(names.prefix(4))), staleDate: nil)
+        if Activity<PlansAttributes>.activities.contains(where: { !$0.content.state.today.isEmpty }) { return }
+        if let a = Activity<PlansAttributes>.activities.first {
+            Task { await a.update(content) }
+        } else {
+            _ = try? Activity.request(attributes: PlansAttributes(), content: content, pushType: nil)
+        }
+    }
+
     static func endAll() {
         Task {
             for a in Activity<PlansAttributes>.activities { await a.end(nil, dismissalPolicy: .immediate) }

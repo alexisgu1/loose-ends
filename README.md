@@ -13,7 +13,8 @@ Each week it finds the people you text all the time but haven't actually made pl
 - **Hold and drag the plan to change the time.** The day scrolls as you drag. Over a busy block the plan turns red, and if you let go there it slides back.
 - **Swipe right** to put the plan on your Google Calendar, with the place's address, and send the text. Emoji confetti matches the plan (🍲 for Kang's, 📚 for Hatcher).
 - **End of the week:** the plans you made, each as a card. Tap one to open its calendar event.
-- **Next week:** pick who you want to see. On Monday a Live Activity on the lock screen reminds you ("Make plans with Ruby, Omar and Hana this week"), and the deck has their plans ready.
+- **Every day on the lock screen:** a Live Activity names who you still have plans to make with ("Make plans with Ruby, Omar and Hana this week"). Tap it to jump back into the deck.
+- **Next week:** pick who you want to see, and the deck has their plans ready.
 - **After you make a plan**, the Dynamic Island shows who and when for 20 seconds.
 
 ## Why there's a Mac part
